@@ -69,22 +69,14 @@ def saveData():
     print("exit")
 
 
-@app.route('/',methods=['GET'])
-def retireve_jobinfo():
+@app.route('/<string:job_title>/<string:location>',methods=['GET'])
+def retireve_jobinfo(job_title,location):
     print("inside fun")
     query_parameters = request.args
     list_json=[]
     json_data={}
-    print('Before reading params')
-    job_title=query_parameters.get('title')
-    location=query_parameters.get('location')
-    print(job_title,str(location))
-    
-    results = JobInfo.query.whoosh_search(''+str(job_title)+' '+str(location)+'').all()
-    print("after result")
-    print(results)    
+    results = JobInfo.query.whoosh_search(''+str(job_title)+' '+str(location)+'').all()    
     for data in results:
-        print(data)
         json_data={
             "title":data.Job_Title,
             "company":data.Company_Name,
