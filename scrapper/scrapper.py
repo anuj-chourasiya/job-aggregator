@@ -18,4 +18,4 @@ while(True):
                 server.saveData()
                 
     main()
-    time.sleep(200000)
+    time.sleep(21600)
