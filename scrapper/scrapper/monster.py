@@ -51,7 +51,8 @@ def scrape(location,job_title):
         "title":title_elem.text.strip(),
         "company":company_elem.text.strip(),
         "location":location_elem.text.strip(),
-        "apply_link":href
+        "apply_link":href,
+        "source":"monster"
         }
         Monster_List.append(Job_Dict)
 
