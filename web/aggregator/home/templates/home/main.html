@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block page_content %}
+<form action="/" method="post">
+      {% csrf_token %}
+      <br><br><br>
+      <div class="container">
+      <div class="row search-style mt-3">
+        <input class="form-control col col-lg-3" type="text" placeholder="Job Title" name="job_title" />
+       
+        <input class="form-control ml-3 col col-lg-3" type="text" placeholder="Location" name=location />
+     
+        <button class="search-btn ml-1" type="submit">Search</button>
+      </div>
+      
+      </div>
+      
+    
+  </form>
+
+
+{% if data %}
+<br><br>
+<div class="container">
+    {% for data in data %}
+    <hr class="style-four">
+        
+        <div class="row mt-5">
+        <div class="col data-left">
+          {{data.company}}
+        </div>
+        <div class="col">
+          {{data.source}}
+        </div>
+        <div class="col">
+          {{data.title}}
+        </div>
+        <div class="col">
+          <a href={{data.apply_linkh}} target="_blank" class="apply-btn">Apply</a>
+          
+        </div>
+      </div>
+     
+    
+    {% endfor %}
+    </div>
+{% else %}
+  <div class="head-home">
+    <h1>Tired of Searching JOBS?</h1>
+  </div>
+  <div>
+    <p class="para-desc mt-3  mb-5">
+    JOBAggregator scraps data from all possible job boards,job portals and other internet sites. It saves lot of time instead of going to differnet sites it provides data on a single platform.Its like is a one stop shop where you get everything according to your need.We provide you best search results to get your dream Job.
+    </p>
+  </div><br>
+{% endif %}
+
+
+
+{% endblock %}
+

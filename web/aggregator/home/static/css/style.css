@@ -1,0 +1,124 @@
+.search-style{
+    margin-left:370px;
+}
+@media screen and (max-width: 750px){
+	
+    .search-style{
+        margin-left:0px;
+    }
+}
+
+.data-left{
+    margin-left:200px;
+}
+@media screen and (max-width: 750px){
+	
+    .data-left{
+        margin-left:20px;
+    }
+}
+
+.para-desc{
+    margin-left:300px;
+    margin-right:200px;
+    padding:1em 0.5em;
+    text-align: left;
+    font-size: 1rem;
+    line-height: 1.4;
+    font-family: 'Poppins', sans-serif;
+    color: #050517;
+    font-size: 20px;
+  }
+@media screen and (max-width: 750px){
+	
+    .para-desc{
+        margin-left:10px;
+        margin-right:10px;
+        padding:1em 0.5em;
+        font-size: 1rem;
+        line-height: 1.4;
+        font-family: 'Poppins', sans-serif;
+        color: #050517;
+        font-size: 20px;
+      }
+}
+.head-home{
+    margin-bottom:20px;
+    margin-top: 40px;
+    margin-left:410px;
+    line-height: 40px;
+        font-size: 30px;
+        font-family: medium-content-title-font, Georgia, Cambria, "Times New Roman", Times, serif;
+        color: rgba(41, 41, 41, 1);
+        letter-spacing: 0;
+        font-style: normal;
+        font-weight: 400;
+}
+@media screen and (max-width: 750px){
+	
+    .head-home{
+        margin-bottom:20px;
+        margin-left:30px;
+        line-height: 40px;
+            font-size: 30px;
+            font-family: medium-content-title-font, Georgia, Cambria, "Times New Roman", Times, serif;
+            color: rgba(41, 41, 41, 1);
+            letter-spacing: 0;
+            font-style: normal;
+                font-weight: 400;
+    }
+}
+
+hr.style-four {
+    
+    width:87%;
+    text-align: right ;
+    height: 12px;
+    border: 0;
+    box-shadow: inset 0 12px 12px -12px rgba(0, 0, 0, 0.5);
+}
+@media screen and (max-width: 750px){
+	
+    hr.style-four {
+        width:100%;
+        text-align: right ;
+        height: 12px;
+        border: 0;
+        box-shadow: inset 0 12px 12px -12px rgba(0, 0, 0, 0.5);
+    }
+}
+
+.search-btn{
+    background-image: linear-gradient(to right, #f67926,#db7c3d);
+    padding: 0.7rem 1rem;
+    border-radius: 0.5rem;
+    line-height:15px;
+    font-size: 14px;
+    color: #fff;
+    border: none!important;
+    cursor: pointer;
+    }
+.search-btn:hover{
+    
+    background-image: linear-gradient(to right, #4fb1f5,#4fb1f5);
+    text-decoration: none;
+    color: #fff;
+    
+    }
+.apply-btn{
+        background-image: linear-gradient(to right, #4fb1f5,#4fb1f5);
+        padding: 0.7rem 1rem;
+        border-radius: 0.5rem;
+        line-height:15px;
+        font-size: 14px;
+        color: #fff;
+        border: none!important;
+        cursor: pointer;
+        }
+.apply-btn:hover{
+        
+        background-image: linear-gradient(to right, #f67926,#f67926);
+        text-decoration: none;
+        color: #fff;
+        
+        }
