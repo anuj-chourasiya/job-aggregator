@@ -55,7 +55,8 @@ def scrape(location,job_title):
         "company":company_elem.text.strip(),
         "location":location_elem.text.strip(),
         "apply_link":link,
-        "date":date.text.strip()
+        "source":"linkedin"
+        # "date":date.text.strip()
         }
         Linkedin_List.append(Job_Dict)
 
