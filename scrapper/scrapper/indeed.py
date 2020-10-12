@@ -49,7 +49,8 @@ def scrape(location,job_title):
         "company":company_elem.text.strip(),
         "location":location,
         "apply_link":link,
-        "date":date.text.strip()
+        "source":"indeed"
+       # "date":date.text.strip()
         }
         Indeed_List.append(Job_Dict)
 
