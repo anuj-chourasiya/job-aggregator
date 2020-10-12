@@ -32,18 +32,21 @@ class JobInfo(db.Model):
     Company_Name=db.Column(db.String(100),primary_key=True)
     Location=db.Column(db.String(100),primary_key=True)
     Apply_Link=db.Column(db.String(100),primary_key=True)
- 
-    def __init__(self,Job_Title,Company_Name,Location,Apply_Link):
+    Source=db.Column(db.String(100))
+
+    def __init__(self,Job_Title,Company_Name,Location,Apply_Link,Source):
         self.Job_Title=Job_Title
         self.Company_Name=Company_Name
         self.Location=Location
         self.Apply_Link=Apply_Link
+        self.Source=Source
+
 wa.whoosh_index(app,JobInfo)
 
 #JobInfo Schema
 class JobInfoSchema(ma.Schema):
     class Meta:
-        fields= ('Job_Title','Company_Name','Location','Apply_Link')
+        fields= ('Job_Title','Company_Name','Location','Apply_Link','Source')
 
 #Init Schema
 job_info_schema=JobInfoSchema()
@@ -59,7 +62,7 @@ def saveData():
     for data in range(len(all_data)):
         print("----------------------",data)
         try:
-            new_jobInfo = JobInfo(all_data[data]['title'],all_data[data]['company'],all_data[data]['location'],all_data[data]['apply_link'])
+            new_jobInfo = JobInfo(all_data[data]['title'],all_data[data]['company'],all_data[data]['location'],all_data[data]['apply_link'],all_data[data]['source'])
             db.session.add(new_jobInfo)
             db.session.commit()
             print(all_data[data]['apply_link'])
@@ -81,7 +84,8 @@ def retireve_jobinfo(job_title,location):
             "title":data.Job_Title,
             "company":data.Company_Name,
             "location":data.Location,
-            "apply_linkh":data.Apply_Link
+            "apply_linkh":data.Apply_Link,
+            "source":data.Source
         }
         list_json.append(json_data)
 
