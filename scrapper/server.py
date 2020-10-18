@@ -54,22 +54,30 @@ job_infos_schema=JobInfoSchema(many=True)
 
 def saveData():
     all_data=[]
+
     all_data.extend(monster.Monster_List)
     all_data.extend(indeed.Indeed_List)
     all_data.extend(linkedin.Linkedin_List)
     
 
     for data in range(len(all_data)):
-        print("----------------------",data)
+        print("----------------------",len(all_data))
         try:
             new_jobInfo = JobInfo(all_data[data]['title'],all_data[data]['company'],all_data[data]['location'],all_data[data]['apply_link'],all_data[data]['source'])
             db.session.add(new_jobInfo)
             db.session.commit()
-            print(all_data[data]['apply_link'])
+            print(all_data[data]['title'],all_data[data]['location'],all_data[data]['source'])
+        
+            print("====================")
         except exc.IntegrityError:
             print("inside redundant data")
             db.session.rollback()
+        except:
+            print("inside flusherror")
+            db.session.rollback()
+
     print("exit")
+    all_data=[]
 
 
 @app.route('/<string:job_title>/<string:location>',methods=['GET'])
