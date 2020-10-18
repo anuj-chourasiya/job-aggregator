@@ -21,9 +21,13 @@ def getURL(location,job_title):
     job_title=job_title.split()
     location=location.split(',')
     
-    if len(job_title)==2 and len(location)>=2:
+    if len(job_title)==2 and len(location)==3:
         URL=URL+'https://www.indeed.co.in/jobs?q='+job_title[0]+'+'+job_title[1]+'&l='+location[0]+'%2C+'+location[1]+''
         return URL
+    if len(job_title)==2 and len(location)==4:
+        URL=URL+'https://www.indeed.co.in/jobs?q='+job_title[0]+'+'+job_title[1]+'&l='+location[0]+'%2C+'+location[1]+'%2C+'+location[2]+'%2C+'+location[3]+''
+        return URL
+
 
 
 def scrape(location,job_title):
