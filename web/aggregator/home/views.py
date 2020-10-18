@@ -12,11 +12,17 @@ class HomeView(View):
         print("location",location)
         ctx={}
         if job_title and location:
-            data= requests.get('http://13.235.243.43/'+job_title+'/'+location)
+            data= requests.get('http://13.232.241.179/'+job_title+'/'+location)
             print(data.status_code)
             ctx["data"]=data.json
+            ctx["title"]=job_title
+            ctx["location"]=location
+
         else:
-            ctx["data"]=None    
+            ctx["data"]=None
+            ctx["title"]=job_title
+            ctx["location"]=location
+
         return render(request,self.template_name,ctx)
     def get(self,request):
         return render(request,self.template_name)
