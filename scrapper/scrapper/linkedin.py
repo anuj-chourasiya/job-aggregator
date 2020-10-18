@@ -17,14 +17,28 @@ def getLinkedinApplyLink(href):
     except:
         return href
         
+def geoID(location):
+    if location=="Bengaluru":
+        return '105307040'
+    elif location=="Pune":
+        return '102510332'
+    elif location=="Hyderabad":
+        return '105556991'
+    elif location=="Mumbai":
+        return '100859113'
+
 
 def getURL(location,job_title):
     URL=''
     job_title=job_title.split()
     location=location.split(',')
     if len(job_title)==2 and len(location)==3:
-        URL=URL+'https://in.linkedin.com/jobs/search?keywords='+job_title[0]+'%20'+job_title[1]+'&location='+location[0]+'%2C%20'+location[1]+'%2C%20'+location[2]+'&geoId=102510332&trk=public_jobs_jobs-search-bar_search-submit&redirect=false&position=1&pageNum=0'
+        URL=URL+'https://in.linkedin.com/jobs/search?keywords='+job_title[0]+'%20'+job_title[1]+'&location='+location[0]+'%2C%20'+location[1]+'%2C%20'+location[2]+'&geoId='+geoID(location[0])+'&trk=public_jobs_jobs-search-bar_search-submit&redirect=false&position=1&pageNum=0'
         return URL
+    if len(job_title)==2 and len(location)==4:
+        URL=URL+'https://in.linkedin.com/jobs/search?keywords='+job_title[0]+'%20'+job_title[1]+'&location='+location[0]+'%2C%20'+location[2]+'%2C%20'+location[3]+'%2C%20'+location[2]+'&geoId=&trk=public_jobs_jobs-search-bar_search-submit&redirect=false&position=1&pageNum=0'
+        return URL
+
 
     
 def scrape(location,job_title):
