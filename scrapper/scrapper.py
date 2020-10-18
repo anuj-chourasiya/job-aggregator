@@ -11,7 +11,7 @@ while(True):
     def main():
         for location in fields.locations:
             for job_title in fields.job_titles:
-
+                print("calling fields ",location,job_title)
                 linkedin.scrape(location,job_title)
                 monster.scrape(location,job_title)
                 indeed.scrape(location,job_title)
