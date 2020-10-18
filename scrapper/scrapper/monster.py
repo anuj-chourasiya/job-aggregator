@@ -27,10 +27,16 @@ def getURL(location,job_title):
         URL=URL+"https://www.monster.com/jobs/search/?q="+job_title[0]+"-"+job_title[1]+"&where="+location[0]+"-"+location[1]+"-"+location[2]+""
         return URL
 
+    elif len(job_title)==2 and len(location)==4:
+        URL=URL+"https://www.monster.com/jobs/search/?q="+job_title[0]+"-"+job_title[1]+"&where="+location[0]+"-"+location[1]+"-"+location[2]+"-"+location[3]+""
+        return URL
+
+
 
 def scrape(location,job_title):
     URL=getURL(location,job_title)
     page = requests.get(URL)
+    print("status code",page.status_code)
     soup=BeautifulSoup(page.content,'html.parser')
     results=soup.find(id='ResultsContainer')
     job_elems = results.find_all('section', class_='card-content')
