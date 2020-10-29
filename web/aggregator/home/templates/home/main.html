@@ -19,6 +19,7 @@
   </form>
 
 
+
 {% if data %}
 <br><br>
 <div class="container">
@@ -55,7 +56,17 @@
   </div><br>
 {% endif %}
 
-
+<div class="pagination1 mb-5 mt-5">
+      
+    {% for num in data.paginator.page_range %}
+             
+        {% if data.number == num %}
+            <span class="pagination-number pagination-current">{{num}}</span>
+        {% elif num > data.number|add:'-3' and num < data.number|add:'3' %}
+	<a class='pagination-number' href='http://13.235.49.91:8000/?job_title={{title}}&location={{location}}&page={{num}}' >{{num}}</a>
+        {% endif %}
+    {% endfor %}
+</div>
 
 {% endblock %}
 
