@@ -1,3 +1,31 @@
+
+.pagination1{
+    text-align: center;
+    margin-top: 1em;
+    }
+
+.pagination-action{
+
+    margin: 0 0.1em;
+    display: inline-block;
+    padding:0.5em;
+    color: #b9b9b9;
+    font-size: 1.3em;
+}
+
+.pagination-number{
+    background-color: #6d85c7;
+    padding: 0.5em 0.8em;
+    color: #fff;
+    border-radius: 2px;
+}
+
+.pagination-number:hover, .pagination-current{
+    background-color: #3354AA;
+    color: #fff;
+    text-decoration: none;
+}
+
 .search-style{
     margin-left:370px;
 }
