@@ -8,6 +8,10 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from sqlalchemy import exc
 import os
+import utils
+
+#getting logger object
+logger=utils.getParameters("scrapper.log")
 
 #Init app
 app= Flask(__name__)
@@ -33,50 +37,48 @@ class JobInfo(db.Model):
     Location=db.Column(db.String(100),primary_key=True)
     Apply_Link=db.Column(db.String(100),primary_key=True)
     Source=db.Column(db.String(100))
+    Date=db.Column(db.String)
 
-    def __init__(self,Job_Title,Company_Name,Location,Apply_Link,Source):
+    def __init__(self,Job_Title,Company_Name,Location,Apply_Link,Source,Date):
         self.Job_Title=Job_Title
         self.Company_Name=Company_Name
         self.Location=Location
         self.Apply_Link=Apply_Link
         self.Source=Source
+        self.Date=Date
 
 wa.whoosh_index(app,JobInfo)
 
 #JobInfo Schema
 class JobInfoSchema(ma.Schema):
     class Meta:
-        fields= ('Job_Title','Company_Name','Location','Apply_Link','Source')
+        fields= ('Job_Title','Company_Name','Location','Apply_Link','Source','Date')
 
 #Init Schema
 job_info_schema=JobInfoSchema()
 job_infos_schema=JobInfoSchema(many=True)
 
-def saveData():
-    all_data=[]
-
-    all_data.extend(monster.Monster_List)
-    all_data.extend(indeed.Indeed_List)
-    all_data.extend(linkedin.Linkedin_List)
+def saveData(all_data):
     
+    logger.info("---------------------- {}".format(len(all_data)))
 
     for data in range(len(all_data)):
-        print("----------------------",len(all_data))
+        
         try:
-            new_jobInfo = JobInfo(all_data[data]['title'],all_data[data]['company'],all_data[data]['location'],all_data[data]['apply_link'],all_data[data]['source'])
+            new_jobInfo = JobInfo(all_data[data]['title'],all_data[data]['company'],all_data[data]['location'],all_data[data]['apply_link'],all_data[data]['source'],all_data[data]['date'])
             db.session.add(new_jobInfo)
             db.session.commit()
-            print(all_data[data]['title'],all_data[data]['location'],all_data[data]['source'])
+            logger.info("clean data".format(all_data[data]['title'],all_data[data]['location'],all_data[data]['source']))
         
             print("====================")
         except exc.IntegrityError:
-            print("inside redundant data")
+            logger.info("inside redundant data")
             db.session.rollback()
         except:
-            print("inside flusherror")
+            logger.warning("inside flusherror")
             db.session.rollback()
 
-    print("exit")
+    logger.info("one cycle ends")
     all_data=[]
 
 
@@ -93,7 +95,8 @@ def retireve_jobinfo(job_title,location):
             "company":data.Company_Name,
             "location":data.Location,
             "apply_linkh":data.Apply_Link,
-            "source":data.Source
+            "source":data.Source,
+            "date":data.Date
         }
         list_json.append(json_data)
 
