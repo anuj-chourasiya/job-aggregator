@@ -1,8 +1,11 @@
 #!/usr/bin/env python
 import requests
+import sys
+sys.path.append("/root")
+import utils
 from bs4 import BeautifulSoup
 
-Monster_List=[]
+
 '''def getMonsterApplyLink(href):
 
 
@@ -32,11 +35,14 @@ def getURL(location,job_title):
         return URL
 
 
+logger=utils.getParameters("scrapper.log")
 
 def scrape(location,job_title):
+    Monster_List=[]
     URL=getURL(location,job_title)
     page = requests.get(URL)
-    print("status code",page.status_code)
+    if page.status_code != 200:
+        logger.warning("status code: {} for location: {} and job_title: {} inside monster".format(page.status_code,location,job_title))
     soup=BeautifulSoup(page.content,'html.parser')
     results=soup.find(id='ResultsContainer')
     job_elems = results.find_all('section', class_='card-content')
@@ -45,6 +51,7 @@ def scrape(location,job_title):
         title_elem = job_elem.find('h2', class_='title')
         company_elem = job_elem.find('div', class_='company')
         location_elem = job_elem.find('div', class_='location')
+        #date = job_elem.find('div', class_='meta.flex-col > time')
         url_elem=job_elem.find('a')
         if None in (title_elem, company_elem, location_elem):
             continue
@@ -58,7 +65,10 @@ def scrape(location,job_title):
         "company":company_elem.text.strip(),
         "location":location_elem.text.strip(),
         "apply_link":href,
-        "source":"monster"
+        "source":"monster",
+        "date":"default"
+
         }
         Monster_List.append(Job_Dict)
-
+    return Monster_List    
+        
