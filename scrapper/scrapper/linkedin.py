@@ -1,8 +1,11 @@
 #!/usr/bin/env python
 import requests
+import sys
+sys.path.append("/root")
+import utils
 from bs4 import BeautifulSoup
 
-Linkedin_List=[]
+
 def getLinkedinApplyLink(href):
     try:
         prev=href
@@ -40,12 +43,14 @@ def getURL(location,job_title):
         return URL
 
 
-    
+logger=utils.getParameters("scrapper.log")    
 def scrape(location,job_title):
+    Linkedin_List=[]
     URL=getURL(location,job_title)
    
     page = requests.get(URL)
-    print(page.status_code)
+    if page.status_code != 200:
+        logger.warning("status code returned {} for location: {} and job_title: {} inside linkedin".format(page.status_code,location,job_title))
     soup=BeautifulSoup(page.content,'html.parser')
     
     results=soup.find(class_='jobs-search__results-list')
@@ -53,7 +58,7 @@ def scrape(location,job_title):
     job_elems = results.find_all('li', class_='result-card')
   
     for job_elem in job_elems:
-      
+        Linkedin_List=[]
         title_elem = job_elem.find('h3', class_='result-card__title')
         company_elem = job_elem.find('h4', class_='result-card__subtitle')
         location_elem = job_elem.find('span', class_='job-result-card__location')
@@ -69,10 +74,11 @@ def scrape(location,job_title):
         "company":company_elem.text.strip(),
         "location":location_elem.text.strip(),
         "apply_link":link,
-        "source":"linkedin"
-        # "date":date.text.strip()
+        "source":"linkedin",
+        "date":date.text.strip()
         }
         Linkedin_List.append(Job_Dict)
+    return Linkedin_List
 
 
 
