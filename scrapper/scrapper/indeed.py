@@ -1,8 +1,11 @@
 #!/usr/bin/env python
 import requests
 from bs4 import BeautifulSoup
+import sys
+sys.path.append("/root")
+import utils
 
-Indeed_List=[]
+
 def getIndeedApplyLink(href):
     page = requests.get(href)
     soup=BeautifulSoup(page.content,'html.parser')
@@ -28,11 +31,16 @@ def getURL(location,job_title):
         URL=URL+'https://www.indeed.co.in/jobs?q='+job_title[0]+'+'+job_title[1]+'&l='+location[0]+'%2C+'+location[1]+'%2C+'+location[2]+'%2C+'+location[3]+''
         return URL
 
-
-
+logger=utils.getParameters("scrapper.log")
+#scrape function fill scrapped data in a list
 def scrape(location,job_title):
+    Indeed_List=[]
+
+    #getting site specefic url
     URL=getURL(location,job_title)
     page = requests.get(URL)
+    if page.status_code != 200:
+        logger.warning("status code: {} for location: {} and job_title: {}".format(page.status_code,location,job_title))
     soup=BeautifulSoup(page.content,'html.parser')
     results=soup.find(id='resultsCol')
     job_elems = results.find_all('div', class_='jobsearch-SerpJobCard')
@@ -44,19 +52,22 @@ def scrape(location,job_title):
         date = job_elem.find('span', class_='date')
         href = url_elem.get('href')
         href="https://www.indeed.com"+href
+        #getting apply link by scrapping again
         link=getIndeedApplyLink(href)
         if href is None:
 	        continue
         
+        #creating dictionary for job information 
         Job_Dict={
         "title":title_elem.text.strip(),
         "company":company_elem.text.strip(),
         "location":location,
         "apply_link":link,
-        "source":"indeed"
-       # "date":date.text.strip()
+        "source":"indeed",
+        "date":date.text.strip()
         }
         Indeed_List.append(Job_Dict)
+    return Indeed_List
 
 
 
