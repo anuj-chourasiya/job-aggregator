@@ -57,15 +57,31 @@
 {% endif %}
 
 <div class="pagination1 mb-5 mt-5">
-      
+    {% if data.has_previous %}
+    <a class="pagination-action" href="http://{{request.get_host}}/?job_title={{title}}&location={{location}}&page=1"><i class="fas fa-angle-double-left"></i>
+	</a>
+	<a class="pagination-action" href="http://{{request.get_host}}/?job_title={{title}}&location={{location}}&page={{data.previous_page_number}}"><i class="fas fa-angle-left"></i>
+        </a>
+
+    {% endif %}
+
     {% for num in data.paginator.page_range %}
              
         {% if data.number == num %}
             <span class="pagination-number pagination-current">{{num}}</span>
         {% elif num > data.number|add:'-3' and num < data.number|add:'3' %}
-	<a class='pagination-number' href='http://13.235.49.91:8000/?job_title={{title}}&location={{location}}&page={{num}}' >{{num}}</a>
+	<a class='pagination-number' href='http://{{request.get_host}}/?job_title={{title}}&location={{location}}&page={{num}}' >{{num}}</a>
         {% endif %}
     {% endfor %}
+
+    {% if data.has_next %}
+    <a class="pagination-action" href="http://{{request.get_host}}/?job_title={{title}}&location={{location}}&page={{data.next_page_number}}"><i class="fas fa-angle-right"></i>
+        </a>
+	<a class="pagination-action" href="http://{{request.get_host}}/?job_title={{title}}&location={{location}}&page={{data.paginator.num_pages}}"><i class="fas fa-angle-double-right"></i>
+        </a>
+
+    {% endif %}
+
 </div>
 
 {% endblock %}
