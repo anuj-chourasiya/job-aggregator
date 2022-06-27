@@ -1,5 +1,5 @@
 # job-aggregator
-It is a containerized web applicaton which scraps data from job portals and make available them at a single place.This application consist of two container:
+It is a containerized web applicaton which scraps data from job portals and make available them at a single place.This application consist of two containers:
 
 1. scrapper
 2. web
